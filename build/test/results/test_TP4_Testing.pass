@@ -3,30 +3,60 @@
   :path: test
   :file: test_TP4_Testing.c
 :successes:
+- :test: test_Error_Respuesta_NO_Definida
+  :line: 301
+  :message: ''
+  :unity_test_time: 0
 - :test: test_Prueba_Casos_Alarma
-  :line: 273
+  :line: 322
   :message: ''
   :unity_test_time: 0
 - :test: test_Prueba_Casos_Falla
-  :line: 309
+  :line: 342
   :message: ''
   :unity_test_time: 0
 - :test: test_Prueba_Casos_Normal
-  :line: 345
+  :line: 362
   :message: ''
   :unity_test_time: 0
 - :test: test_Logica_Transicion_de_Estados
-  :line: 381
+  :line: 382
+  :message: ''
+  :unity_test_time: 0
+- :test: test_Error_Estado_NO_Definido
+  :line: 398
   :message: ''
   :unity_test_time: 0
 :failures: []
 :ignores: []
 :counts:
-  :total: 4
-  :passed: 4
+  :total: 6
+  :passed: 6
   :failed: 0
   :ignored: 0
 :stdout:
+- ''
+- " *** Inicio de Pruebas de Error: Respuesta NO DEFINIDA  ***"
+- " *** Ejecutando Caso de Prueba Nro: 0 ***"
+- " Alarm Comm Signal "
+- ''
+- " ====== Unexpected Status ====== "
+- ''
+- " *** Ejecutando Caso de Prueba Nro: 1 ***"
+- " Unexpected Alarm Signal "
+- ''
+- " Normal Comm Signal "
+- ''
+- " ====== Unexpected Status ====== "
+- ''
+- " *** Ejecutando Caso de Prueba Nro: 2 ***"
+- " Unexpected Fail Signal "
+- ''
+- " Normal Comm Signal "
+- ''
+- " ====== Unexpected Status ====== "
+- ''
+- " ___ Final de Pruebas de Error: Respuesta NO DEFINIDA  __"
 - ''
 - " *** Inicio de Pruebas de Alarma ***"
 - " *** Ejecutando Caso de Prueba Nro: 0 ***"
@@ -41,7 +71,7 @@
 - ''
 - " ====== Alarm Status ====== "
 - ''
-- " *** Final de Pruebas de Alarma ***"
+- " __ Final de Pruebas de Alarma __"
 - ''
 - " *** Inicio de Pruebas de Falla ***"
 - " *** Ejecutando Caso de Prueba Nro: 0 ***"
@@ -56,7 +86,7 @@
 - ''
 - " ====== Fail Status ====== "
 - ''
-- " *** Final de Pruebas de Falla ***"
+- " __ Final de Pruebas de Falla __"
 - ''
 - " *** Inicio de Pruebas de Normal ***"
 - " *** Ejecutando Caso de Prueba Nro: 0 ***"
@@ -69,70 +99,85 @@
 - ''
 - " ====== Normal Status ====== "
 - ''
-- " *** Final de Pruebas de Normal ***"
+- " __ Final de Pruebas de Normal __"
 - ''
 - " *** Inicio de Pruebas Generales ***"
 - " *** Ejecutando Caso de Prueba Nro: 0 ***"
-- " *** Estado Actual: 0 ***"
 - "== Estado Principal =="
 - "  ** NORMAL **"
+- " Local Alarm Signal "
+- ''
 - " Normal Comm Signal "
 - ''
-- " ====== Normal Status ====== "
+- " ====== Alarm Status ====== "
 - ''
 - " *** Ejecutando Caso de Prueba Nro: 1 ***"
-- " *** Estado Actual: 1 ***"
+- "-- Estado Secundario --"
+- "  ** PRE-ALARMA **"
+- " Local Alarm Signal "
+- ''
+- " Normal Comm Signal "
+- ''
+- " ====== Alarm Status ====== "
+- ''
+- " *** Ejecutando Caso de Prueba Nro: 2 ***"
+- "== Estado Principal =="
+- "  ** ALARMA **"
+- " Local Fail Signal "
+- ''
+- " Alarm Comm Signal "
+- ''
+- " ====== Alarm-Fail Status ====== "
+- ''
+- " *** Ejecutando Caso de Prueba Nro: 3 ***"
+- "-- Estado Secundario --"
+- "  ** PRE-ALARMA/FALLA **"
+- " Local Fail Signal "
+- ''
+- " Alarm Comm Signal "
+- ''
+- " ====== Alarm-Fail Status ====== "
+- ''
+- " *** Ejecutando Caso de Prueba Nro: 4 ***"
+- "== Estado Principal =="
+- "  ** ALARMA-FALLA **"
+- " Local Fail Signal "
+- ''
+- " Normal Comm Signal "
+- ''
+- " ====== Fail Status ====== "
+- ''
+- " *** Ejecutando Caso de Prueba Nro: 5 ***"
+- "== Estado Principal =="
+- "  ** FALLA **"
+- " Local Alarm Signal "
+- ''
+- " Alarm Comm Signal "
+- ''
+- " ====== Alarm Status ====== "
+- ''
+- " *** Ejecutando Caso de Prueba Nro: 6 ***"
+- "-- Estado Secundario --"
+- "  ** PRE-ALARMA **"
+- " Local Alarm Signal "
+- ''
+- " Normal Comm Signal "
+- ''
+- " ====== Alarm Status ====== "
+- ''
+- " *** Ejecutando Caso de Prueba Nro: 7 ***"
 - "== Estado Principal =="
 - "  ** ALARMA **"
 - " Normal Comm Signal "
 - ''
 - " ====== Normal Status ====== "
 - ''
-- " *** Ejecutando Caso de Prueba Nro: 2 ***"
-- " *** Estado Actual: 2 ***"
-- "== Estado Principal =="
-- "  ** FALLA **"
-- " Normal Comm Signal "
-- ''
-- " ====== Normal Status ====== "
-- ''
-- " *** Ejecutando Caso de Prueba Nro: 3 ***"
-- " *** Estado Actual: 3 ***"
-- "== Estado Principal =="
-- "  ** ALARMA-FALLA **"
-- " Normal Comm Signal "
-- ''
-- " ====== Normal Status ====== "
-- ''
-- " *** Ejecutando Caso de Prueba Nro: 4 ***"
-- " *** Estado Actual: 4 ***"
+- " *** Ejecutando Caso de Prueba Nro: 8 ***"
 - "-- Estado Secundario --"
 - "  ** PRE-NORMAL **"
 - " Normal Comm Signal "
 - ''
 - " ====== Normal Status ====== "
 - ''
-- " *** Ejecutando Caso de Prueba Nro: 5 ***"
-- " *** Estado Actual: 5 ***"
-- "-- Estado Secundario --"
-- "  ** PRE-ALARMA **"
-- " Normal Comm Signal "
-- ''
-- " ====== Normal Status ====== "
-- ''
-- " *** Ejecutando Caso de Prueba Nro: 6 ***"
-- " *** Estado Actual: 6 ***"
-- "-- Estado Secundario --"
-- "  ** PRE-FALLA **"
-- " Normal Comm Signal "
-- ''
-- " ====== Normal Status ====== "
-- ''
-- " *** Ejecutando Caso de Prueba Nro: 7 ***"
-- " *** Estado Actual: 7 ***"
-- "-- Estado Secundario --"
-- "  ** PRE-ALARMA/FALLA **"
-- " Normal Comm Signal "
-- ''
-- " ====== Normal Status ====== "
-:time: 0.0023198939961730503
+- " __ Final de Pruebas Generales __"
+:time: 0.0025362789965583943

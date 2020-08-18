@@ -1,5 +1,5 @@
 #include "build/temp/_test_TP4_Testing.c"
-#include "build/test/mocks/mock_primario4.h"
+#include "mock_primario4.h"
 #include "src/TP4_Testing.h"
 #include "/var/lib/gems/2.5.0/gems/ceedling-0.30.0/vendor/unity/src/unity.h"
 
@@ -30,35 +30,7 @@ typedef struct Casos_Prueba_s {
 
 
 
-
-
-typedef struct Casos_Prueba_Gral_s {
-
- dprim_state_t Estado_Inicial;
-
- dprim_state_t Transicion_Alarma;
-
- dprim_state_t Transicion_Falla;
-
- dprim_state_t Transicion_Normal;
-
- dprim_state_t Transicion_Alarma_Falla;
-
- dprim_state_t Local_Alarm_Response;
-
- dprim_state_t Local_Fail_Response;
-
- dprim_state_t Comm_Response;
-
- dprim_state_t Expected_Result;
-
- dprim_state_t Next_State;
-
-} Casos_Prueba_Gral_t;
-
-
-
-Casos_Prueba_t Casos_Alarma[]= {
+static const Casos_Prueba_t Casos_Alarma[]= {
 
  {
 
@@ -112,7 +84,7 @@ Casos_Prueba_t Casos_Alarma[]= {
 
 
 
-Casos_Prueba_t Casos_Falla[]= {
+static const Casos_Prueba_t Casos_Falla[]= {
 
  {
 
@@ -166,7 +138,7 @@ Casos_Prueba_t Casos_Falla[]= {
 
 
 
-Casos_Prueba_t Casos_Normal[]= {
+static const Casos_Prueba_t Casos_Normal[]= {
 
  {
 
@@ -220,7 +192,7 @@ Casos_Prueba_t Casos_Normal[]= {
 
 
 
-Casos_Prueba_Gral_t Casos_General[]= {
+static const Casos_Prueba_t Casos_General[]= {
 
  {
 
@@ -236,15 +208,157 @@ Casos_Prueba_Gral_t Casos_General[]= {
 
   .Transicion_Alarma_Falla = PRE_ALARM_FAIL,
 
-  .Local_Alarm_Response = NO_STATE,
+  .Local_Alarm_Response = PREALARM,
 
   .Local_Fail_Response = NO_STATE,
 
   .Comm_Response = NORMAL,
 
-  .Expected_Result = NORMAL,
+  .Expected_Result = PREALARM,
 
-  .Next_State = ALARM,
+ },
+
+ {
+
+
+
+  .Estado_Inicial = PREALARM,
+
+  .Transicion_Alarma = ALARM,
+
+  .Transicion_Falla = PREFAIL,
+
+  .Transicion_Normal = PRENORMAL,
+
+  .Transicion_Alarma_Falla = PRE_ALARM_FAIL,
+
+  .Local_Alarm_Response = ALARM,
+
+  .Local_Fail_Response = NO_STATE,
+
+  .Comm_Response = NORMAL,
+
+  .Expected_Result = ALARM,
+
+ },
+
+ {
+
+
+
+  .Estado_Inicial = ALARM,
+
+  .Transicion_Alarma = ALARM,
+
+  .Transicion_Falla = PREFAIL,
+
+  .Transicion_Normal = PRENORMAL,
+
+  .Transicion_Alarma_Falla = PRE_ALARM_FAIL,
+
+  .Local_Alarm_Response = NO_STATE,
+
+  .Local_Fail_Response = PREFAIL,
+
+  .Comm_Response = ALARM,
+
+  .Expected_Result = PRE_ALARM_FAIL,
+
+ },
+
+ {
+
+
+
+  .Estado_Inicial = PRE_ALARM_FAIL,
+
+  .Transicion_Alarma = ALARM,
+
+  .Transicion_Falla = FAIL,
+
+  .Transicion_Normal = PRENORMAL,
+
+  .Transicion_Alarma_Falla = ALARM_FAIL,
+
+  .Local_Alarm_Response = NO_STATE,
+
+  .Local_Fail_Response = FAIL,
+
+  .Comm_Response = ALARM,
+
+  .Expected_Result = ALARM_FAIL,
+
+ },
+
+ {
+
+
+
+  .Estado_Inicial = ALARM_FAIL,
+
+  .Transicion_Alarma = ALARM,
+
+  .Transicion_Falla = FAIL,
+
+  .Transicion_Normal = PRENORMAL,
+
+  .Transicion_Alarma_Falla = ALARM_FAIL,
+
+  .Local_Alarm_Response = NO_STATE,
+
+  .Local_Fail_Response = FAIL,
+
+  .Comm_Response = PRENORMAL,
+
+  .Expected_Result = FAIL,
+
+ },
+
+ {
+
+
+
+  .Estado_Inicial = FAIL,
+
+  .Transicion_Alarma = PREALARM,
+
+  .Transicion_Falla = FAIL,
+
+  .Transicion_Normal = PRENORMAL,
+
+  .Transicion_Alarma_Falla = PRE_ALARM_FAIL,
+
+  .Local_Alarm_Response = PREALARM,
+
+  .Local_Fail_Response = NO_STATE,
+
+  .Comm_Response = PREALARM,
+
+  .Expected_Result = PREALARM,
+
+ },
+
+ {
+
+
+
+  .Estado_Inicial = PREALARM,
+
+  .Transicion_Alarma = ALARM,
+
+  .Transicion_Falla = PREFAIL,
+
+  .Transicion_Normal = PRENORMAL,
+
+  .Transicion_Alarma_Falla = PRE_ALARM_FAIL,
+
+  .Local_Alarm_Response = ALARM,
+
+  .Local_Fail_Response = NO_STATE,
+
+  .Comm_Response = NORMAL,
+
+  .Expected_Result = ALARM,
 
  },
 
@@ -269,60 +383,6 @@ Casos_Prueba_Gral_t Casos_General[]= {
   .Comm_Response = PRENORMAL,
 
   .Expected_Result = PRENORMAL,
-
-  .Next_State = FAIL,
-
- },
-
- {
-
-
-
-  .Estado_Inicial = FAIL,
-
-  .Transicion_Alarma = PREALARM,
-
-  .Transicion_Falla = FAIL,
-
-  .Transicion_Normal = PRENORMAL,
-
-  .Transicion_Alarma_Falla = PRE_ALARM_FAIL,
-
-  .Local_Alarm_Response = NO_STATE,
-
-  .Local_Fail_Response = NO_STATE,
-
-  .Comm_Response = PRENORMAL,
-
-  .Expected_Result = PRENORMAL,
-
-  .Next_State = ALARM_FAIL,
-
- },
-
- {
-
-
-
-  .Estado_Inicial = ALARM-FAIL,
-
-  .Transicion_Alarma = ALARM,
-
-  .Transicion_Falla = FAIL,
-
-  .Transicion_Normal = PRENORMAL,
-
-  .Transicion_Alarma_Falla = ALARM_FAIL,
-
-  .Local_Alarm_Response = NO_STATE,
-
-  .Local_Fail_Response = NO_STATE,
-
-  .Comm_Response = PRENORMAL,
-
-  .Expected_Result = PRENORMAL,
-
-  .Next_State = PRENORMAL,
 
  },
 
@@ -348,91 +408,87 @@ Casos_Prueba_Gral_t Casos_General[]= {
 
   .Expected_Result = NORMAL,
 
-  .Next_State = PREALARM,
-
-},
-
-{
-
-
-
-  .Estado_Inicial = PREALARM,
-
-  .Transicion_Alarma = ALARM,
-
-  .Transicion_Falla = PREFAIL,
-
-  .Transicion_Normal = PRENORMAL,
-
-  .Transicion_Alarma_Falla = PRE_ALARM_FAIL,
-
-  .Local_Alarm_Response = NO_STATE,
-
-  .Local_Fail_Response = NO_STATE,
-
-  .Comm_Response = PRENORMAL,
-
-  .Expected_Result = PRENORMAL,
-
-  .Next_State = PREFAIL,
-
- },
-
- {
-
-
-
-  .Estado_Inicial = PREFAIL,
-
-  .Transicion_Alarma = PREALARM,
-
-  .Transicion_Falla = FAIL,
-
-  .Transicion_Normal = PRENORMAL,
-
-  .Transicion_Alarma_Falla = PRE_ALARM_FAIL,
-
-  .Local_Alarm_Response = NO_STATE,
-
-  .Local_Fail_Response = NO_STATE,
-
-  .Comm_Response = PRENORMAL,
-
-  .Expected_Result = PRENORMAL,
-
-  .Next_State = PRE_ALARM_FAIL,
-
- },
-
- {
-
-
-
-  .Estado_Inicial = PRE_ALARM_FAIL,
-
-  .Transicion_Alarma = ALARM,
-
-  .Transicion_Falla = FAIL,
-
-  .Transicion_Normal = PRENORMAL,
-
-  .Transicion_Alarma_Falla = ALARM_FAIL,
-
-  .Local_Alarm_Response = NO_STATE,
-
-  .Local_Fail_Response = NO_STATE,
-
-  .Comm_Response = PRENORMAL,
-
-  .Expected_Result = PRENORMAL,
-
-  .Next_State = NORMAL,
-
  },
 
 };
 
 
+
+static const Casos_Prueba_t Casos_Errores[]= {
+
+ {
+
+
+
+  .Estado_Inicial = NORMAL,
+
+  .Transicion_Alarma = PREALARM,
+
+  .Transicion_Falla = PREFAIL,
+
+  .Transicion_Normal = NORMAL,
+
+  .Transicion_Alarma_Falla = PRE_ALARM_FAIL,
+
+  .Local_Alarm_Response = NO_STATE,
+
+  .Local_Fail_Response = NO_STATE,
+
+  .Comm_Response = ALARM,
+
+  .Expected_Result = FAIL,
+
+ },
+
+ {
+
+
+
+  .Estado_Inicial = NORMAL,
+
+  .Transicion_Alarma = PREALARM,
+
+  .Transicion_Falla = PREFAIL,
+
+  .Transicion_Normal = NORMAL,
+
+  .Transicion_Alarma_Falla = PRE_ALARM_FAIL,
+
+  .Local_Alarm_Response =PREFAIL,
+
+  .Local_Fail_Response = NO_STATE,
+
+  .Comm_Response = NORMAL,
+
+  .Expected_Result = FAIL,
+
+ },
+
+ {
+
+
+
+  .Estado_Inicial = NORMAL,
+
+  .Transicion_Alarma = PREALARM,
+
+  .Transicion_Falla = PREFAIL,
+
+  .Transicion_Normal = NORMAL,
+
+  .Transicion_Alarma_Falla = PRE_ALARM_FAIL,
+
+  .Local_Alarm_Response =NO_STATE,
+
+  .Local_Fail_Response = ALARM,
+
+  .Comm_Response = NORMAL,
+
+  .Expected_Result = FAIL,
+
+ },
+
+};
 
 
 
@@ -442,7 +498,9 @@ dprimario_t prim;
 
 
 
-void Cambio_De_Estado(void){
+void Cambio_De_Estado(Casos_Prueba_t * Caso_de_Estudio){
+
+ prim.state = Caso_de_Estudio[caso_actual].Estado_Inicial;
 
  ButtonCheck_CMockExpectAndReturn(
 
@@ -450,15 +508,15 @@ void Cambio_De_Estado(void){
 
 
 
-                                                252
+                                                  285
 
- , &prim, Casos_General[caso_actual].Transicion_Alarma, Casos_General[caso_actual].Transicion_Normal, ALARM, Casos_General[caso_actual].Local_Alarm_Response)
-
-
+ , &prim, Caso_de_Estudio[caso_actual].Transicion_Alarma, Caso_de_Estudio[caso_actual].Transicion_Normal, ALARM, Caso_de_Estudio[caso_actual].Local_Alarm_Response)
 
 
 
-                                                 ;
+
+
+                                                   ;
 
 
 
@@ -468,15 +526,15 @@ void Cambio_De_Estado(void){
 
 
 
-                                               257
+                                                 290
 
- , &prim, Casos_General[caso_actual].Transicion_Falla, Casos_General[caso_actual].Transicion_Normal, FAIL, Casos_General[caso_actual].Local_Fail_Response)
-
-
+ , &prim, Caso_de_Estudio[caso_actual].Transicion_Falla, Caso_de_Estudio[caso_actual].Transicion_Normal, FAIL, Caso_de_Estudio[caso_actual].Local_Fail_Response)
 
 
 
-                                                ;
+
+
+                                                  ;
 
 
 
@@ -486,29 +544,61 @@ void Cambio_De_Estado(void){
 
 
 
-                                         262
+                                           295
 
- , &prim, Casos_General[caso_actual].Transicion_Alarma, Casos_General[caso_actual].Transicion_Falla, Casos_General[caso_actual].Transicion_Normal, Casos_General[caso_actual].Comm_Response)
-
-
+ , &prim, Caso_de_Estudio[caso_actual].Transicion_Alarma, Caso_de_Estudio[caso_actual].Transicion_Falla, Caso_de_Estudio[caso_actual].Transicion_Normal, Caso_de_Estudio[caso_actual].Comm_Response)
 
 
 
-                                          ;
+
+
+                                            ;
 
 
 
- ResetChange_CMockExpect(264, &prim);
+ ResetChange_CMockExpect(297, &prim);
 
 }
 
 
 
-void setUp(void) {
+
+
+void test_Error_Respuesta_NO_Definida(void){
+
+ char Text_ID[30];
 
 
 
- prim.state = Casos_Alarma[caso_actual].Estado_Inicial;
+ printf("\n *** Inicio de Pruebas de Error: Respuesta NO DEFINIDA  ***");
+
+ for(caso_actual = 0; caso_actual < sizeof(Casos_Errores) / sizeof(struct Casos_Prueba_s); caso_actual++){
+
+  printf("\n *** Ejecutando Caso de Prueba Nro: %d ***",caso_actual);
+
+
+
+  Cambio_De_Estado((Casos_Prueba_t *)Casos_Errores);
+
+
+
+  FullCheck (&prim,Casos_Errores[caso_actual].Transicion_Alarma,
+
+    Casos_Errores[caso_actual].Transicion_Falla,
+
+    Casos_Errores[caso_actual].Transicion_Normal,
+
+    Casos_Errores[caso_actual].Transicion_Alarma_Falla);
+
+
+
+  sprintf(Text_ID,"Caso de Prueba Nro: %d",caso_actual);
+
+  UnityAssertEqualNumber((UNITY_INT)((Casos_Errores[caso_actual].Expected_Result)), (UNITY_INT)((prim.state)), ((Text_ID)), (UNITY_UINT)(316), UNITY_DISPLAY_STYLE_INT);
+
+ }
+
+ printf("\n ___ Final de Pruebas de Error: Respuesta NO DEFINIDA  __");
 
 }
 
@@ -524,67 +614,11 @@ void test_Prueba_Casos_Alarma(void){
 
  for(caso_actual = 0; caso_actual < sizeof(Casos_Alarma) / sizeof(struct Casos_Prueba_s); caso_actual++){
 
-
-
   printf("\n *** Ejecutando Caso de Prueba Nro: %d ***",caso_actual);
 
 
 
-  ButtonCheck_CMockExpectAndReturn(
-
-
-
-
-
-                                                  283
-
-  , &prim, Casos_Alarma[caso_actual].Transicion_Alarma, Casos_Alarma[caso_actual].Transicion_Normal, ALARM, Casos_Alarma[caso_actual].Local_Alarm_Response)
-
-
-
-
-
-                                                   ;
-
-
-
-  ButtonCheck_CMockExpectAndReturn(
-
-
-
-
-
-                                                 288
-
-  , &prim, Casos_Alarma[caso_actual].Transicion_Falla, Casos_Alarma[caso_actual].Transicion_Normal, FAIL, Casos_Alarma[caso_actual].Local_Fail_Response)
-
-
-
-
-
-                                                  ;
-
-
-
-  CommCheck_CMockExpectAndReturn(
-
-
-
-
-
-                                           293
-
-  , &prim, Casos_Alarma[caso_actual].Transicion_Alarma, Casos_Alarma[caso_actual].Transicion_Falla, Casos_Alarma[caso_actual].Transicion_Normal, Casos_Alarma[caso_actual].Comm_Response)
-
-
-
-
-
-                                            ;
-
-
-
-  ResetChange_CMockExpect(295, &prim);
+  Cambio_De_Estado((Casos_Prueba_t *)Casos_Alarma);
 
 
 
@@ -600,11 +634,11 @@ void test_Prueba_Casos_Alarma(void){
 
   sprintf(Text_ID,"Caso de Prueba Nro: %d",caso_actual);
 
-  UnityAssertEqualNumber((UNITY_INT)((Casos_Alarma[caso_actual].Expected_Result)), (UNITY_INT)((prim.state)), ((Text_ID)), (UNITY_UINT)(303), UNITY_DISPLAY_STYLE_INT);
+  UnityAssertEqualNumber((UNITY_INT)((Casos_Alarma[caso_actual].Expected_Result)), (UNITY_INT)((prim.state)), ((Text_ID)), (UNITY_UINT)(336), UNITY_DISPLAY_STYLE_INT);
 
  }
 
- printf("\n *** Final de Pruebas de Alarma ***");
+ printf("\n __ Final de Pruebas de Alarma __");
 
 }
 
@@ -620,67 +654,11 @@ void test_Prueba_Casos_Falla(void){
 
  for(caso_actual = 0; caso_actual < sizeof(Casos_Falla) / sizeof(struct Casos_Prueba_s); caso_actual++){
 
-
-
   printf("\n *** Ejecutando Caso de Prueba Nro: %d ***",caso_actual);
 
 
 
-  ButtonCheck_CMockExpectAndReturn(
-
-
-
-
-
-                                                 319
-
-  , &prim, Casos_Falla[caso_actual].Transicion_Alarma, Casos_Falla[caso_actual].Transicion_Normal, ALARM, Casos_Falla[caso_actual].Local_Alarm_Response)
-
-
-
-
-
-                                                  ;
-
-
-
-  ButtonCheck_CMockExpectAndReturn(
-
-
-
-
-
-                                                324
-
-  , &prim, Casos_Falla[caso_actual].Transicion_Falla, Casos_Falla[caso_actual].Transicion_Normal, FAIL, Casos_Falla[caso_actual].Local_Fail_Response)
-
-
-
-
-
-                                                 ;
-
-
-
-  CommCheck_CMockExpectAndReturn(
-
-
-
-
-
-                                          329
-
-  , &prim, Casos_Falla[caso_actual].Transicion_Alarma, Casos_Falla[caso_actual].Transicion_Falla, Casos_Falla[caso_actual].Transicion_Normal, Casos_Falla[caso_actual].Comm_Response)
-
-
-
-
-
-                                           ;
-
-
-
-  ResetChange_CMockExpect(331, &prim);
+  Cambio_De_Estado((Casos_Prueba_t *)Casos_Falla);
 
 
 
@@ -696,11 +674,11 @@ void test_Prueba_Casos_Falla(void){
 
   sprintf(Text_ID,"Caso de Prueba Nro: %d",caso_actual);
 
-  UnityAssertEqualNumber((UNITY_INT)((Casos_Falla[caso_actual].Expected_Result)), (UNITY_INT)((prim.state)), ((Text_ID)), (UNITY_UINT)(339), UNITY_DISPLAY_STYLE_INT);
+  UnityAssertEqualNumber((UNITY_INT)((Casos_Falla[caso_actual].Expected_Result)), (UNITY_INT)((prim.state)), ((Text_ID)), (UNITY_UINT)(356), UNITY_DISPLAY_STYLE_INT);
 
  }
 
- printf("\n *** Final de Pruebas de Falla ***");
+ printf("\n __ Final de Pruebas de Falla __");
 
 }
 
@@ -718,65 +696,9 @@ void test_Prueba_Casos_Normal(void){
 
  for(caso_actual = 0; caso_actual < sizeof(Casos_Normal) / sizeof(struct Casos_Prueba_s); caso_actual++){
 
-
-
   printf("\n *** Ejecutando Caso de Prueba Nro: %d ***",caso_actual);
 
-  ButtonCheck_CMockExpectAndReturn(
-
-
-
-
-
-                                                  355
-
-  , &prim, Casos_Normal[caso_actual].Transicion_Alarma, Casos_Normal[caso_actual].Transicion_Normal, ALARM, Casos_Normal[caso_actual].Local_Alarm_Response)
-
-
-
-
-
-                                                   ;
-
-
-
-  ButtonCheck_CMockExpectAndReturn(
-
-
-
-
-
-                                                 360
-
-  , &prim, Casos_Normal[caso_actual].Transicion_Falla, Casos_Normal[caso_actual].Transicion_Normal, FAIL, Casos_Normal[caso_actual].Local_Fail_Response)
-
-
-
-
-
-                                                  ;
-
-
-
-  CommCheck_CMockExpectAndReturn(
-
-
-
-
-
-                                           365
-
-  , &prim, Casos_Normal[caso_actual].Transicion_Alarma, Casos_Normal[caso_actual].Transicion_Falla, Casos_Normal[caso_actual].Transicion_Normal, Casos_Normal[caso_actual].Comm_Response)
-
-
-
-
-
-                                            ;
-
-
-
-  ResetChange_CMockExpect(367, &prim);
+  Cambio_De_Estado((Casos_Prueba_t *)Casos_Normal);
 
 
 
@@ -792,11 +714,11 @@ void test_Prueba_Casos_Normal(void){
 
   sprintf(Text_ID,"Caso de Prueba Nro: %d",caso_actual);
 
-  UnityAssertEqualNumber((UNITY_INT)((Casos_Normal[caso_actual].Expected_Result)), (UNITY_INT)((prim.state)), ((Text_ID)), (UNITY_UINT)(375), UNITY_DISPLAY_STYLE_INT);
+  UnityAssertEqualNumber((UNITY_INT)((Casos_Normal[caso_actual].Expected_Result)), (UNITY_INT)((prim.state)), ((Text_ID)), (UNITY_UINT)(376), UNITY_DISPLAY_STYLE_INT);
 
  }
 
- printf("\n *** Final de Pruebas de Normal ***");
+ printf("\n __ Final de Pruebas de Normal __");
 
 }
 
@@ -812,24 +734,44 @@ void test_Logica_Transicion_de_Estados(void){
 
 
 
-  printf("\n *** Inicio de Pruebas Generales ***");
+ printf("\n *** Inicio de Pruebas Generales ***");
 
-  for(caso_actual = 0; caso_actual < sizeof(Casos_General) / sizeof(struct Casos_Prueba_Gral_s); caso_actual++){
+ for(caso_actual = 0; caso_actual < sizeof(Casos_General) / sizeof(struct Casos_Prueba_s); caso_actual++){
 
-   printf("\n *** Ejecutando Caso de Prueba Nro: %d ***",caso_actual);
+  printf("\n *** Ejecutando Caso de Prueba Nro: %d ***",caso_actual);
 
-   printf("\n *** Estado Actual: %d ***",prim.state);
+  Cambio_De_Estado((Casos_Prueba_t *)Casos_General);
 
-   Cambio_De_Estado();
+  primControl(&prim);
 
-   primControl(&prim);
+  sprintf(Text_ID,"Caso de Prueba Nro: %d",caso_actual);
 
-   sprintf(Text_ID,"Caso de Prueba Nro: %d",caso_actual);
+  UnityAssertEqualNumber((UNITY_INT)((Casos_General[caso_actual].Expected_Result)), (UNITY_INT)((prim.state)), ((Text_ID)), (UNITY_UINT)(392), UNITY_DISPLAY_STYLE_INT);
 
-   UnityAssertEqualNumber((UNITY_INT)((Casos_General[caso_actual].Expected_Result)), (UNITY_INT)((prim.state)), ((Text_ID)), (UNITY_UINT)(392), UNITY_DISPLAY_STYLE_INT);
+ }
 
-   prim.state=Casos_General[caso_actual].Next_State;
+ printf("\n __ Final de Pruebas Generales __");
 
-  }
+}
+
+
+
+
+
+void test_Error_Estado_NO_Definido(void){
+
+
+
+ char Text_ID[30];
+
+ prim.state=NO_STATE;
+
+ primControl(&prim);
+
+ UnityAssertEqualNumber((UNITY_INT)((FAIL)), (UNITY_INT)((prim.state)), (
+
+((void *)0)
+
+), (UNITY_UINT)(403), UNITY_DISPLAY_STYLE_INT);
 
 }

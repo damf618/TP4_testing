@@ -12,10 +12,12 @@ char* GlobalOrderError;
 /*=======External Functions This Runner Calls=====*/
 extern void setUp(void);
 extern void tearDown(void);
+extern void test_Error_Respuesta_NO_Definida(void);
 extern void test_Prueba_Casos_Alarma(void);
 extern void test_Prueba_Casos_Falla(void);
 extern void test_Prueba_Casos_Normal(void);
 extern void test_Logica_Transicion_de_Estados(void);
+extern void test_Error_Estado_NO_Definido(void);
 
 
 /*=======Mock Management=====*/
@@ -34,6 +36,9 @@ static void CMock_Destroy(void)
 {
   mock_primario4_Destroy();
 }
+
+/*=======Setup (stub)=====*/
+void setUp(void) {}
 
 /*=======Teardown (stub)=====*/
 void tearDown(void) {}
@@ -86,10 +91,12 @@ static void run_test(UnityTestFunction func, const char* name, int line_num)
 int main(void)
 {
   UnityBegin("test_TP4_Testing.c");
-  run_test(test_Prueba_Casos_Alarma, "test_Prueba_Casos_Alarma", 273);
-  run_test(test_Prueba_Casos_Falla, "test_Prueba_Casos_Falla", 309);
-  run_test(test_Prueba_Casos_Normal, "test_Prueba_Casos_Normal", 345);
-  run_test(test_Logica_Transicion_de_Estados, "test_Logica_Transicion_de_Estados", 381);
+  run_test(test_Error_Respuesta_NO_Definida, "test_Error_Respuesta_NO_Definida", 301);
+  run_test(test_Prueba_Casos_Alarma, "test_Prueba_Casos_Alarma", 322);
+  run_test(test_Prueba_Casos_Falla, "test_Prueba_Casos_Falla", 342);
+  run_test(test_Prueba_Casos_Normal, "test_Prueba_Casos_Normal", 362);
+  run_test(test_Logica_Transicion_de_Estados, "test_Logica_Transicion_de_Estados", 382);
+  run_test(test_Error_Estado_NO_Definido, "test_Error_Estado_NO_Definido", 398);
 
   CMock_Guts_MemFreeFinal();
   return UnityEnd();
